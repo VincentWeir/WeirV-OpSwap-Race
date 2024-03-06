@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class RacerController : MonoBehaviour
 {
@@ -9,6 +9,11 @@ public class RacerController : MonoBehaviour
     public float maxSpeed = 15f;
     public float reverseSpeed = 10f;
     public float steeringTorque = 40f;
+
+    public int lapNumber = 1;
+    public TMP_Text lapCountText;
+
+    public LapTimeRecorder lapTimeRecorder;
 
     private Rigidbody rb;
 
@@ -35,6 +40,41 @@ public class RacerController : MonoBehaviour
         if (rb.velocity.magnitude > maxSpeed)
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Lap Trigger"))
+        {
+            lapNumber++;
+            UpdateLapCountDisplay();
+            Debug.Log(lapNumber);
+
+            if (lapTimeRecorder != null)
+            {
+                float lapTime = Time.time;
+                lapTimeRecorder.RecordLapTime();
+            }
+            else
+            {
+                Debug.LogWarning("LapTimeRecorder reference is not assigned in the RacerController script.");
+            }
+        }
+    }
+
+    void UpdateLapCountDisplay()
+    {
+        if (lapCountText != null)
+        {
+            if (lapNumber < 4)
+            {
+                lapCountText.text = "Lap: " + lapNumber + " / 3";
+            }
+            else if (lapNumber == 4)
+            {
+                lapCountText.text = "Lap: 3 / 3";
+            }
         }
     }
 }
