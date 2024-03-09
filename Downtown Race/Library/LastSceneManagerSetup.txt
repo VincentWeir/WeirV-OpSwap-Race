@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/Downtown.unity
+- path: Assets/Scenes/Free Roam.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

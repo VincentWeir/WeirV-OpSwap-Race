@@ -41,6 +41,14 @@ public class RacerController : MonoBehaviour
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
+
+        if (lapNumber == 4)
+        {
+            accelerationForce = 0;
+            brakingForce = 0;
+            reverseSpeed = 0;
+            steeringTorque = 0;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
